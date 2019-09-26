@@ -1,0 +1,169 @@
+-REMOVE A LINE # 
+sed -i "\|$line|d" file
+
+REMOVE chrMT from file
+sed '/chrMT/d'
+
+
+REMOVE ABSURD CHR POSITION VALUES
+bedClip
+
+IF ELSE STATEMENT IN AWK
+awk '{ if ($2=="\-" || $2 == "\+") print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5; else print $1 "\_" $2 "\_" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7}' 
+
+IF STATEMENT IN AWK
+ awk '{ if ($2=="\-" || $2 == "\+") print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5}'  
+
+
+#Create a virtual env and install whatever you need there
+python -m virtualenv <name>
+source env/bin/activate
+pip install module
+deactivate
+
+#load conda on uppmax
+module load conda/latest
+
+#running velocito
+conda install numpy scipy cython numba matplotlib scikit-learn h5py click
+pip install numpy --user
+pip install Cython --user
+pip install velocyto --user
+
+
+# HEATMAP OF TISSUES vs. DOG BREED
+
+require(dplyr)
+
+mymat<-read.delim("Desktop/Copy of strt_tissues_plot.txt",sep="\t", header=T)
+
+# SLK1048	Finnish Lapphund	olfactory bulb	olfactory bulb
+# SLK1048	Finnish Lapphund	olfactory bulb	olfactory bulb
+# SLK1048	Finnish Lapphund	piriform lobe	piriform lobe
+
+
+mymatFreq <- data.frame(table(select(mymat, breed_en, subterm)))
+
+
+ggplot(mymatFreq, aes(x=factor(breed_en, levels=unique(breed_en)),y=subterm)) + 
+  geom_tile(aes(fill=as.numeric(Freq)), colour = "gray") +
+  geom_text(aes(label=Freq)) + scale_fill_gradient(low = "lemonchiffon", high = "tomato4") +
+  theme(axis.text.y = element_text(face="bold",size = 10), axis.text.x = element_text( angle = 60, hjust = 1, size = 10),
+        axis.title.x = element_text(face="bold", size = 12),
+        axis.title.y = element_text(face="bold", size = 12),
+        legend.position = "none") +
+  xlab("Breed") + ylab("Subterm")
+
+
+
+To ckeck platform in Unix:
+cat /etc/os-release
+
+
+-REMOVE A LINE # 
+sed -i "\|$line|d" file
+
+REMOVE chrMT from file
+sed '/chrMT/d'
+
+
+REMOVE ABSURD CHR POSITION VALUES
+bedClip
+
+HTML doc
+Insert link: <a href="link">name</a>
+
+IF ELSE STATEMENT IN AWK
+awk '{ if ($2=="\-" || $2 == "\+") print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5; else print $1 "\_" $2 "\_" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7}' 
+
+IF STATEMENT IN AWK
+ awk '{ if ($2=="\-" || $2 == "\+") print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5}'  
+
+DETERMINE MAX READ LENGTH IN FASTQ FILE
+awk 'NR%4 == 2 {lengths[length($0)]++} END {for (l in lengths) {print l, lengths[l]}}' 24hpf.fastq
+
+
+SQL: IMPORT DATABASE INTO PGADMIN INTERFACE
+/Applications/Postgres.app/Contents/Versions/11/bin/psql -p5432 -f /Users/ireste/Downloads/fantod_dumpall-2.sql
+
+pg_dump -U danio-user danio-code > /home/michael/freeze-03.db
+
+HOW TO MAKE A FREEZE:
+
+ssh irene@danio.code.zfin.org
+pg_dump -U danio-user danio-code > /home/irene/freeze-test.db
+venous-injury-another-disjoint-enervate-pappus
+
+mv /home/irene/freeze-test.db /zfin/danio-code/freezer/freeze-04
+Chmod 775 freeze-test.db
+
+To make an invetory: 
+export db dump into csv
+psql -h localhost -U danio-user -d danio-code
+venous-injury-another-disjoint-enervate-pappus
+
+\copy (SELECT daniocodedcc_data.data_id, daniocodedcc_sequencing.sequencing_id, daniocodedcc_technicalreplicate.technicalreplicate_id, daniocodedcc_appliedassay.appliedassay_id, daniocodedcc_assay.assay_id, daniocodedcc_biosamplereplicate.biosamplereplicate_id, daniocodedcc_biosample.biosample_id, daniocodedcc_series.series_id, daniocodedcc_data.derived_from_id, daniocodedcc_data.version_id, daniocodedcc_data.mapped_genome_id, daniocodedcc_data.primary_file, daniocodedcc_data.secondary_file FROM daniocodedcc_data INNER JOIN daniocodedcc_sequencing ON daniocodedcc_sequencing.id = daniocodedcc_data.sequencing_id INNER JOIN daniocodedcc_technicalreplicate ON daniocodedcc_technicalreplicate.id = daniocodedcc_sequencing.technicalreplicate_id INNER JOIN daniocodedcc_appliedassay ON daniocodedcc_appliedassay.id = daniocodedcc_technicalreplicate.appliedassay_id INNER JOIN daniocodedcc_assay ON daniocodedcc_assay.id = daniocodedcc_appliedassay.assay_id INNER JOIN daniocodedcc_assay_types ON daniocodedcc_assay.assay_type_id = daniocodedcc_assay_types.id INNER JOIN daniocodedcc_biosamplereplicate ON daniocodedcc_biosamplereplicate.id = daniocodedcc_appliedassay.biosamplereplicate_id INNER JOIN daniocodedcc_biosample ON daniocodedcc_biosample.id = daniocodedcc_biosamplereplicate.biosample_id LEFT JOIN daniocodedcc_developmental_stages ON daniocodedcc_biosample.stage_id = daniocodedcc_developmental_stages.id INNER JOIN daniocodedcc_genetic_backgrounds ON daniocodedcc_biosample.genetic_background_id = daniocodedcc_genetic_backgrounds.id LEFT JOIN daniocodedcc_anatomical_terms ON daniocodedcc_biosample.anatomical_term_id = daniocodedcc_anatomical_terms.id INNER JOIN daniocodedcc_platforms ON daniocodedcc_platforms.id = daniocodedcc_sequencing.platform_id INNER JOIN daniocodedcc_instruments ON daniocodedcc_instruments.id = daniocodedcc_sequencing.instrument_id LEFT JOIN daniocodedcc_biosample_types ON daniocodedcc_biosample.biosample_type_id = daniocodedcc_biosample_types.id INNER JOIN daniocodedcc_series ON daniocodedcc_series.id = daniocodedcc_biosample.series_id AND daniocodedcc_series.status_id >= 1) TO '/home/michael/dumpdb2.csv' WITH CSV HEADER;
+scp michael@danio-code.zfin.org:/home/michael/dumpdb2.csv /Users/mido/Desktop/DATA_SUMMARY_DEC_2018
+
+- compare columns derived_from_id to applied_assay if they don't match- then the data is unprocessed
+
+
+
+TAITO :
+
+#make freeze folder visible 
+Chmod 774
+
+#start an interactive session
+sinteractive
+
+
+--------------------------------------------------------------------------
+interactive -n 1 -t 1:00:00 -A snic2017-7-411
+
+-----------------------------------------------------------------------------
+ #!/bin/bash -l
+#SBATCH -snic20177411
+#SBATCH -p core -n 8
+#SBATCH -t 1:00:00
+#SBATCH -J run_bowtie
+
+module load bioinfo-tools 
+module load bowtie/1.1.2/
+module load samtools/1.8
+module load BEDTools/2.27.1
+
+python /home/irenest/utr_test/3PSeq_analysis/alignment_trigger.py -q /home/irenest/utr_test/SRR1033824_processed.fastq -g /data/uppnex/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/BowtieIndex/genome -c /home/irenest/utr_test/3PSeq_analysis/config.ini
+
+
+ #!/bin/bash -l
+#SBATCH -snic20177411
+#SBATCH -p core -n 8
+#SBATCH -t 1:00:00
+#SBATCH -J fastxtrimmer
+
+module load bioinfo-tools 
+module load Fastx
+
+fastx_trimmer -f 7 /home/irenest/utr_test/SRR1033824_processed.fastq /home/irenest/utr_test/SRR1033824_processed_TRIMMED.fastq
+
+
+
+module load bioinfo-tools 
+module load TrimGalore/0.4.4
+
+trim_galore --clip_R1 7 --fastqc /home/irenest/utr_test/SRR1033824_processed.fastq
+trim_galore --clip_R1 7 --output_dir trimmed_fastq --fastqc /home/irenest/utr_test/SRR1033825_processed.fastq
+
+
+---------------------------------------------------------------------------------------------------
+
+module load bioinfo-tools 
+module load bowtie
+module load FastQC/0.11.2
+module load MultiQC/1.5
+module load Fastx
+module load TrimGalore/0.4.4
+
+
+
