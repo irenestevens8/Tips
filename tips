@@ -90,23 +90,6 @@ pg_dump -U danio-user danio-code > /home/michael/freeze-03.db
 
 HOW TO MAKE A FREEZE:
 
-ssh irene@danio.code.zfin.org
-pg_dump -U danio-user danio-code > /home/irene/freeze-test.db
-venous-injury-another-disjoint-enervate-pappus
-
-mv /home/irene/freeze-test.db /zfin/danio-code/freezer/freeze-04
-Chmod 775 freeze-test.db
-
-To make an invetory: 
-export db dump into csv
-psql -h localhost -U danio-user -d danio-code
-venous-injury-another-disjoint-enervate-pappus
-
-\copy (SELECT daniocodedcc_data.data_id, daniocodedcc_sequencing.sequencing_id, daniocodedcc_technicalreplicate.technicalreplicate_id, daniocodedcc_appliedassay.appliedassay_id, daniocodedcc_assay.assay_id, daniocodedcc_biosamplereplicate.biosamplereplicate_id, daniocodedcc_biosample.biosample_id, daniocodedcc_series.series_id, daniocodedcc_data.derived_from_id, daniocodedcc_data.version_id, daniocodedcc_data.mapped_genome_id, daniocodedcc_data.primary_file, daniocodedcc_data.secondary_file FROM daniocodedcc_data INNER JOIN daniocodedcc_sequencing ON daniocodedcc_sequencing.id = daniocodedcc_data.sequencing_id INNER JOIN daniocodedcc_technicalreplicate ON daniocodedcc_technicalreplicate.id = daniocodedcc_sequencing.technicalreplicate_id INNER JOIN daniocodedcc_appliedassay ON daniocodedcc_appliedassay.id = daniocodedcc_technicalreplicate.appliedassay_id INNER JOIN daniocodedcc_assay ON daniocodedcc_assay.id = daniocodedcc_appliedassay.assay_id INNER JOIN daniocodedcc_assay_types ON daniocodedcc_assay.assay_type_id = daniocodedcc_assay_types.id INNER JOIN daniocodedcc_biosamplereplicate ON daniocodedcc_biosamplereplicate.id = daniocodedcc_appliedassay.biosamplereplicate_id INNER JOIN daniocodedcc_biosample ON daniocodedcc_biosample.id = daniocodedcc_biosamplereplicate.biosample_id LEFT JOIN daniocodedcc_developmental_stages ON daniocodedcc_biosample.stage_id = daniocodedcc_developmental_stages.id INNER JOIN daniocodedcc_genetic_backgrounds ON daniocodedcc_biosample.genetic_background_id = daniocodedcc_genetic_backgrounds.id LEFT JOIN daniocodedcc_anatomical_terms ON daniocodedcc_biosample.anatomical_term_id = daniocodedcc_anatomical_terms.id INNER JOIN daniocodedcc_platforms ON daniocodedcc_platforms.id = daniocodedcc_sequencing.platform_id INNER JOIN daniocodedcc_instruments ON daniocodedcc_instruments.id = daniocodedcc_sequencing.instrument_id LEFT JOIN daniocodedcc_biosample_types ON daniocodedcc_biosample.biosample_type_id = daniocodedcc_biosample_types.id INNER JOIN daniocodedcc_series ON daniocodedcc_series.id = daniocodedcc_biosample.series_id AND daniocodedcc_series.status_id >= 1) TO '/home/michael/dumpdb2.csv' WITH CSV HEADER;
-scp michael@danio-code.zfin.org:/home/michael/dumpdb2.csv /Users/mido/Desktop/DATA_SUMMARY_DEC_2018
-
-- compare columns derived_from_id to applied_assay if they don't match- then the data is unprocessed
-
 
 
 TAITO :
