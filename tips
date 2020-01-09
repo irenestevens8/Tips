@@ -59,6 +59,8 @@ ggplot(mymatFreq, aes(x=factor(breed_en, levels=unique(breed_en)),y=subterm)) +
 To ckeck platform in Unix:
 cat /etc/os-release
 
+#check # reads in fastq
+echo $(cat file.fastq|wc -l)/4|bc
 
 -REMOVE A LINE # 
 sed -i "\|$line|d" file
