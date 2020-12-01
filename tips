@@ -84,6 +84,9 @@ IF STATEMENT IN AWK
 DETERMINE MAX READ LENGTH IN FASTQ FILE
 awk 'NR%4 == 2 {lengths[length($0)]++} END {for (l in lengths) {print l, lengths[l]}}' 24hpf.fastq
 
+#extract geneid and name from GTF:
+cat /igenomes/Danio_rerio/Ensembl/GRCz10/Annotation/Genes/genes.gtf | awk -F "\t" '{print $9}' |  awk -F ";" '{print $2 $3}'  |tr -d '"' |sed '/exon_version/d' |  sed '/gene_biotype/d' | awk '{print $2 "\t" $4}' | uniq > $HOME/GRCz10_geneids.txt
+
 
 SQL: IMPORT DATABASE INTO PGADMIN INTERFACE
 /Applications/Postgres.app/Contents/Versions/11/bin/psql -p5432 -f /Users/ireste/Downloads/fantod_dumpall-2.sql
@@ -91,64 +94,23 @@ SQL: IMPORT DATABASE INTO PGADMIN INTERFACE
 pg_dump -U danio-user danio-code > /home/michael/freeze-03.db
 
 HOW TO MAKE A FREEZE:
-
-
-
-TAITO :
-
 #make freeze folder visible 
 Chmod 774
 
 #start an interactive session
-sinteractive
+interactive -n 1 -t 1:00:00 -A snicxxxx
 
 
---------------------------------------------------------------------------
-interactive -n 1 -t 1:00:00 -A snic2017-7-411
-
------------------------------------------------------------------------------
- #!/bin/bash -l
-#SBATCH -snic20177411
-#SBATCH -p core -n 8
-#SBATCH -t 1:00:00
-#SBATCH -J run_bowtie
-
-module load bioinfo-tools 
-module load bowtie/1.1.2/
-module load samtools/1.8
-module load BEDTools/2.27.1
 
 python /home/irenest/utr_test/3PSeq_analysis/alignment_trigger.py -q /home/irenest/utr_test/SRR1033824_processed.fastq -g /data/uppnex/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/BowtieIndex/genome -c /home/irenest/utr_test/3PSeq_analysis/config.ini
 
 
- #!/bin/bash -l
-#SBATCH -snic20177411
-#SBATCH -p core -n 8
-#SBATCH -t 1:00:00
 #SBATCH -J fastxtrimmer
-
-module load bioinfo-tools 
 module load Fastx
-
 fastx_trimmer -f 7 /home/irenest/utr_test/SRR1033824_processed.fastq /home/irenest/utr_test/SRR1033824_processed_TRIMMED.fastq
 
-
-
-module load bioinfo-tools 
 module load TrimGalore/0.4.4
-
 trim_galore --clip_R1 7 --fastqc /home/irenest/utr_test/SRR1033824_processed.fastq
 trim_galore --clip_R1 7 --output_dir trimmed_fastq --fastqc /home/irenest/utr_test/SRR1033825_processed.fastq
-
-
----------------------------------------------------------------------------------------------------
-
-module load bioinfo-tools 
-module load bowtie
-module load FastQC/0.11.2
-module load MultiQC/1.5
-module load Fastx
-module load TrimGalore/0.4.4
-
 
 
