@@ -1,0 +1,6 @@
+Select what metadata paramets to include by DAG (direct acyclic graph) as a knowledge-driven confounder selection
+
+library(ggdag)
+library(ggplot2)
+
+#JAMA Guide to Statistics and Methods 2020, Causeal Directed Acyclic Graphs
